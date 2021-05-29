@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body style="text-align: center;">
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <div>
+      <img src="http://localhost:8080/ipfs/<%= hash %>" width="40%" id="image">
+    </div>
+    <br>
+    <input type="file" id="inputImage" accept="image/*">
+    <button type="submit" id="btnSubmit">Send</button>
+    <script>
+      document.getElementById("btnSubmit").addEventListener("click", event => {
+        const formData = new FormData();
+        const inputImage = document.getElementById("inputImage");
+
+        formData.append('image', inputImage.files[0]);
+
+        fetch('/image', { method: 'PUT', body: formData })
+        .then(response => response.json())
+        .then(json => {
+          // document.getElementById("image").src = `https://ipfs.io/ipfs/${json.path}`;
+          document.getElementById("image").src = `http://localhost:8080/ipfs/${json.path}`;
+        });
+      });
+    </script>
+  </body>
+</html>
