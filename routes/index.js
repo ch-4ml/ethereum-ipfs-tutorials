@@ -36,7 +36,7 @@ router.put('/image', async function(req, res) {
     // 이더리움 스마트 컨트랙트에 CID 저장
     await sc.methods.setCID(cid).send({ from: accounts[0] });
 
-    res.status(200).send({ path: cid });
+    res.status(200).send({ cid });
   } catch (err) {
     console.log(err)
   }

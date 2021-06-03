@@ -8,7 +8,7 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
     <div>
-      <img src="http://localhost:8080/ipfs/<%= cid %>" width="40%" id="image">
+      <img src="http://localhost:8081/ipfs/<%= cid %>" width="40%" id="image">
     </div>
     <br>
     <input type="file" id="inputImage" accept="image/*">
@@ -24,7 +24,7 @@
         .then(response => response.json())
         .then(json => {
           // document.getElementById("image").src = `https://ipfs.io/ipfs/${json.cid}`;
-          document.getElementById("image").src = `http://localhost:8080/ipfs/${json.cid}`;
+          document.getElementById("image").src = `http://localhost:8081/ipfs/${json.cid}`;
         });
       });
     </script>
