@@ -6,17 +6,17 @@ const ipfs = create();
 
 const Web3 = require('web3');
 const web3 = new Web3('http://localhost:7545');
-const contract = require('../contract/IPFSHashStorage');
+const contract = require('../contract/IPFSCIDStorage');
 const sc = new web3.eth.Contract(contract.abi, contract.address);
 
 /* GET home page. */
 router.get('/', async function(req, res) {
   try {
-    // 이더리움 네트워크에 저장되어있는 IPFS Hash값 가져오기
-    const hash = await sc.methods.IPFSHash().call();
-    console.log(hash);
+    // 이더리움 스마트 컨트랙트에 저장되어있는 CID 가져오기
+    const cid = await sc.methods.IPFSCID().call();
+    console.log(cid);
     
-    res.render('index', { title: 'IPFS Tutorials', hash });
+    res.render('index', { title: 'IPFS Tutorials', cid });
   } catch(err) {
     console.log(err);
   }  
@@ -29,12 +29,14 @@ router.put('/image', async function(req, res) {
     
     // IPFS에 이미지 업로드
     const file = await ipfs.add(image);
-    const hash = file.path;
 
-    // 이더리움 네트워크에 IPFS Hash값 저장
-    await sc.methods.setHash(hash).send({ from: accounts[0] });
+    // CID
+    const cid = file.path;
 
-    res.status(200).send({ path: hash });
+    // 이더리움 스마트 컨트랙트에 CID 저장
+    await sc.methods.setCID(cid).send({ from: accounts[0] });
+
+    res.status(200).send({ path: cid });
   } catch (err) {
     console.log(err)
   }

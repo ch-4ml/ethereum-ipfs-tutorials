@@ -8,7 +8,7 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
     <div>
-      <img src="http://localhost:8080/ipfs/<%= hash %>" width="40%" id="image">
+      <img src="http://localhost:8080/ipfs/<%= cid %>" width="40%" id="image">
     </div>
     <br>
     <input type="file" id="inputImage" accept="image/*">
@@ -23,8 +23,8 @@
         fetch('/image', { method: 'PUT', body: formData })
         .then(response => response.json())
         .then(json => {
-          // document.getElementById("image").src = `https://ipfs.io/ipfs/${json.path}`;
-          document.getElementById("image").src = `http://localhost:8080/ipfs/${json.path}`;
+          // document.getElementById("image").src = `https://ipfs.io/ipfs/${json.cid}`;
+          document.getElementById("image").src = `http://localhost:8080/ipfs/${json.cid}`;
         });
       });
     </script>
